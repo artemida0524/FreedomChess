@@ -18,7 +18,7 @@ public class GoogleSignInWithFirebase
         
         var configuration = new GoogleSignInConfiguration
         {
-            WebClientId = "419016366114-imoiah908p4js4suvu62dmc1st1eo3ad.apps.googleusercontent.com",
+            WebClientId = "661963047284-kcs5fdhqdr6pe5tqkhdra54u7g09h7aa.apps.googleusercontent.com",
             RequestIdToken = true,
             RequestEmail = true,
         };

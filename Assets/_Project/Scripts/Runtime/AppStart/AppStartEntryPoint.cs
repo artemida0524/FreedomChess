@@ -1,7 +1,11 @@
 using Cysharp.Threading.Tasks;
+using Game.Runtime.AppStart.StartupFlow;
+using Game.Runtime.AppStart.Views;
+using Game.Runtime.Background;
 using Game.Runtime.Core.Auth;
 using Game.Runtime.Core.Connections;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -9,9 +13,14 @@ namespace Game.Runtime.AppStart
 {
 	public class AppStartEntryPoint : MonoBehaviour
 	{
+        [SerializeField] private BackgroundView _backgroundView;
+        [SerializeField] private SignInPanelView _signInPanelView;
+        [SerializeField] private AppStartupFlow flow;
+        [SerializeField] private AppStartProgressPresenter presenter;
 
         private IPlayerAuthRepository _auth;
         private IConnectionService _connection;
+
 
         [Inject]
         private void Constract(IConnectionService connection ,IPlayerAuthRepository auth)
@@ -22,21 +31,31 @@ namespace Game.Runtime.AppStart
 
         private async void Start()
         {
-            _connection.Init();
-            
-            bool internetAvailable = await WaitForInternet(5);
+            _backgroundView.Show();
 
-            if (!internetAvailable)
-            {
-                Debug.Log("no inet");
-                return;
-            }
+            _signInPanelView.Init();
+            presenter.Init();
 
             await _auth.Init();
 
+            flow.Init();
+            await flow.RunAsync();
+
+            //_connection.Init();
+
+            //bool internetAvailable = await WaitForInternet(5);
+
+            //if (!internetAvailable)
+            //{
+            //    Debug.Log("no inet");
+            //    return;
+            //}
+
+            //await _auth.Init();
 
 
-            await _auth.LogInAsync("asdf@adsfad.com", "asdfasdf");
+
+            //await _auth.LogInAsync("asdf@adsfad.com", "asdfasdf");
         }
 
         private async UniTask<bool> WaitForInternet(float timeoutSeconds)

@@ -5,10 +5,11 @@
   <Project Path="Zenject-ReflectionBaking-Editor.csproj" />
   <Project Path="UniTask.Linq.csproj" />
   <Project Path="Zenject-UnitTests-Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Zenject-Editor.csproj" />
   <Project Path="Zenject-IntegrationTests.csproj" />
   <Project Path="UniTask.Addressables.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Zenject-TestFramework.csproj" />
   <Project Path="UniTask.TextMeshPro.csproj" />
   <Project Path="Zenject-PoolMonitor-Editor.csproj" />
