@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
-using Game.Core;
 using Game.Core.Player;
 using Game.Runtime.Core.Connections;
 using Google;
