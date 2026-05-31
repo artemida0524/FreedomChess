@@ -28,6 +28,19 @@ namespace Game.Runtime.Background
                 duration
             ).SetEase(Ease.OutQuad);
         }
-    }
 
+
+        public void Hide()
+        {
+            if (tween != null && tween.IsActive())
+                tween.Kill();
+            tween = DOTween.To(
+                () => new Vector2(mask.softness.x, mask.softness.y),
+                x => mask.softness = new Vector2Int((int)x.x, (int)x.y),
+                new Vector2(10000, 10000),
+                duration
+            ).SetEase(Ease.InQuad);
+        }
+
+    }
 }

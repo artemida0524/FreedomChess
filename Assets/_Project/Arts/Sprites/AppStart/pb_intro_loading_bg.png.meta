@@ -122,13 +122,13 @@ TextureImporter:
       name: pb_intro_loading_bg_1
       rect:
         serializedVersion: 2
-        x: 53
+        x: 54
         y: 8
-        width: 482
+        width: 481
         height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 33, y: 0, z: 47, w: 0}
       customData: 
       outline: []
       physicsShape: []

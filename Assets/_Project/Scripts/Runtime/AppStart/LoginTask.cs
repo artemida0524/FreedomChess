@@ -15,7 +15,7 @@ namespace Game.Runtime.AppStart.Tasks
 {
     public class LoginTask : ITask<AuthError>
     {
-        public string Name => nameof(LoginTask);
+        public string Name => "Login";
         public float Progress { get; private set; } = 0f;
 
         public event Action<float> OnProgressChanged;
