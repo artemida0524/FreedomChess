@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "661963047284",
+    "firebase_url": "https://freedomchess67-default-rtdb.firebaseio.com",
+    "project_id": "freedomchess67",
+    "storage_bucket": "freedomchess67.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661963047284:android:75bf6828b7cc74fab9ac21",
+        "android_client_info": {
+          "package_name": "com.quadx64.FreedomChess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661963047284-sibmiunavfglvdi1khhq7c0akubilulu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quadx64.FreedomChess",
+            "certificate_hash": "4b55ef1beaa97685979e6e7505bdbaa3966df29b"
+          }
+        },
+        {
+          "client_id": "661963047284-kcs5fdhqdr6pe5tqkhdra54u7g09h7aa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-uCe657axVyLe17FROFwZMV0CCMvPBWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661963047284-kcs5fdhqdr6pe5tqkhdra54u7g09h7aa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
