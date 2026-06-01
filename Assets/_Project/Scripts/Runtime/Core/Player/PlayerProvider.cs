@@ -66,6 +66,8 @@ namespace Game.Runtime.Core.Player
             await _database.GetReference($"publicPlayerData/{_auth.CurrentUser.UserId}/name").SetValueAsync(name);
 
             Name = name;
+
+            OnPlayerDataChanged?.Invoke();
         }
 
         public async UniTask SetIcon(int icon)
@@ -73,6 +75,8 @@ namespace Game.Runtime.Core.Player
             await _database.GetReference($"playerConfigs/{_auth.CurrentUser.UserId}/icon").SetValueAsync(icon);
             await _database.GetReference($"publicPlayerData/{_auth.CurrentUser.UserId}/icon").SetValueAsync(icon);
             Icon = icon;
+            OnPlayerDataChanged?.Invoke();
+
         }
 
         [Serializable]

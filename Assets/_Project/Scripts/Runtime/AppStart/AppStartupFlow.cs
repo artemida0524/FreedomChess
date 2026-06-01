@@ -131,7 +131,7 @@ namespace Game.Runtime.AppStart.StartupFlow
                 AuthError.None);
             OnProgressChanged?.Invoke(0.6f);
 
-
+            _friendsProvider.Dispose();
             await _playerProvider.Init();
             await _friendsProvider.Init();
 

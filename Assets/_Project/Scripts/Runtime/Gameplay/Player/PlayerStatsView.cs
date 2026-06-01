@@ -9,7 +9,8 @@ namespace Game.Runtime.Gameplay
 	public class PlayerStatsView : MonoBehaviour
 	{
 		[SerializeField] private Image image;
-		[SerializeField] private TextMeshProUGUI nameEloText;
+		[SerializeField] private TextMeshProUGUI nameText;
+		[SerializeField] private TextMeshProUGUI eloText;
 
 		private PlayerProvider _playerProvider;
 		private IconStatManager _iconStatManager;
@@ -34,7 +35,8 @@ namespace Game.Runtime.Gameplay
 
         private void UpdateData(string name, int elo, int icon)
 		{
-			nameEloText.text = $"{name} ({elo})";
+			nameText.text = $"{name}";
+			eloText.text = $"{elo}";
 			image.sprite = _iconStatManager.GetIconStatById(icon).icon;
         }
 

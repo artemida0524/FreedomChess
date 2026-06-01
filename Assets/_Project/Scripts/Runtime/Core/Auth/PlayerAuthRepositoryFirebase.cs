@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using Game.Core.Player;
 using Game.Runtime.Core.Connections;
 using Google;
@@ -19,7 +20,7 @@ namespace Game.Runtime.Core.Auth
 
         private GoogleSignInWithFirebase googleSignInWithFirebase;
 
-        public event Action OnLoggedOut;
+        public event Action<string> OnLoggedOut;
 
         public bool IsLoggedIn { get; private set; } = false;
 
@@ -268,6 +269,7 @@ namespace Game.Runtime.Core.Auth
         public void LogOut()
         {
             //FirebaseAuth.DefaultInstance.SignOut();
+            string uid = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
             try
             {
                 GoogleSignIn.DefaultInstance.SignOut();
@@ -278,7 +280,7 @@ namespace Game.Runtime.Core.Auth
             }
 
             SetPlayerLogInConfigLocal(false);
-            OnLoggedOut?.Invoke();
+            OnLoggedOut?.Invoke(uid);
             IsLoggedIn = false;
         }
 
