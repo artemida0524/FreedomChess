@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game.Runtime.AppStart.StartupFlow;
 using Game.Runtime.AppStart.Views;
 using Game.Runtime.Background;
@@ -7,6 +8,7 @@ using Game.Runtime.Core.Connections;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Game.Runtime.AppStart
@@ -20,19 +22,22 @@ namespace Game.Runtime.AppStart
 
         private IPlayerAuthRepository _auth;
         private IConnectionService _connection;
+        private IconStatManager _iconStatManager;
 
 
         [Inject]
-        private void Constract(IConnectionService connection ,IPlayerAuthRepository auth)
+        private void Constract(IConnectionService connection ,IPlayerAuthRepository auth, IconStatManager iconStatManager)
         {
             _connection = connection;
             _auth = auth;
+            _iconStatManager = iconStatManager;
         }
 
         private async void Start()
         {
             Application.targetFrameRate = 60;
             //PlayerPrefs.DeleteAll();
+            _iconStatManager.Init();
             _backgroundView.Show();
 
             _signInPanelView.Init();
@@ -42,6 +47,8 @@ namespace Game.Runtime.AppStart
 
             flow.Init();
             await flow.RunAsync();
+
+            SceneManager.LoadScene(1);
 
             //_connection.Init();
 

@@ -5,11 +5,11 @@ namespace Game.Runtime.Gameplay
 {
 	public class GameplayEntryPoint : MonoBehaviour
 	{
-        [SerializeField] private BackgroundView backgroundView;
+        [SerializeField] private PlayerStatsView playerStats;
 
         private void Start()
         {
-            
+            playerStats.Init();
         }
     }
 

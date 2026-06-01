@@ -6,6 +6,7 @@ using Game.Runtime.AppStart.Tasks;
 using Game.Runtime.AppStart.Views;
 //using Game.Runtime.Core.Localizations;
 using Game.Runtime.Core.Connections;
+using Game.Runtime.Core.Player;
 using Game.Runtime.Core.Tasks;
 using System;
 using UnityEngine;
@@ -34,7 +35,8 @@ namespace Game.Runtime.AppStart.StartupFlow
         private ITaskFactory _taskFactory;
         //private IGameLogSpawner _logSpawner;
         private IConnectionService _connectionService;
-
+        private PlayerProvider _playerProvider;
+        private FriendsProvider _friendsProvider;
         //private ITask<DependencyStatus> _preloadTask;
         private ITask<AuthError> _loginTask;
         //private ITask<InitDependenciesResult> _initDependencies;
@@ -45,12 +47,16 @@ namespace Game.Runtime.AppStart.StartupFlow
         private void Construct(
             //ITaskFactory taskFactory,
             //IGameLogSpawner logSpawner,
-            IConnectionService connectionService
+            IConnectionService connectionService,
+            PlayerProvider playerProvider,
+            FriendsProvider friendsProvider
             )
         {
             //_taskFactory = taskFactory;
             //_logSpawner = logSpawner;
             _connectionService = connectionService;
+            _playerProvider = playerProvider;
+            _friendsProvider = friendsProvider;
         }
         
 
@@ -104,6 +110,7 @@ namespace Game.Runtime.AppStart.StartupFlow
                 return;
             }
             FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false);
+            FirebaseFirestore.DefaultInstance.Settings.PersistenceEnabled = false;
 
             GoogleSignInWithFirebase.Init();
 
@@ -123,11 +130,12 @@ namespace Game.Runtime.AppStart.StartupFlow
                  () => TaskAsync(_loginTask),
                 AuthError.None);
             OnProgressChanged?.Invoke(0.6f);
-            await CheckInternetConnection(5);
 
 
+            await _playerProvider.Init();
+            await _friendsProvider.Init();
 
-
+            //await _friendsProvider.AcceptFriendOffer("bwE1xS7XpxNSqh5bOycu6lrg9UH2");
         }
 
         private async UniTask RepeatUntilSuccess<T>(
