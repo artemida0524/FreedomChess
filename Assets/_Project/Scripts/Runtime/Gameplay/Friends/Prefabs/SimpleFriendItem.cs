@@ -1,3 +1,4 @@
+using Game.Core.Sounds;
 using Game.Runtime.Core.Player;
 using System;
 using TMPro;
@@ -28,6 +29,7 @@ namespace Game.Runtime.Gameplay
             nameText.text = $"{friendData.name}";
             eloText.text = $"{friendData.elo}";
             challenge.onClick.AddListener(() => OnClicked?.Invoke(UserId));
+            challenge.onClick.AddListener(() => SoundManager.Instance.Click());
 
             if (friendData.online)
             {

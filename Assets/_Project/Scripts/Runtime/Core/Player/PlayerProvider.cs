@@ -79,6 +79,14 @@ namespace Game.Runtime.Core.Player
 
         }
 
+        public async UniTask SetElo(int elo)
+        {
+            await _database.GetReference($"playerConfigs/{_auth.CurrentUser.UserId}/elo").SetValueAsync(elo);
+            await _database.GetReference($"publicPlayerData/{_auth.CurrentUser.UserId}/elo").SetValueAsync(elo);
+            Elo = elo;
+            OnPlayerDataChanged?.Invoke();
+        }
+
         [Serializable]
         private class PlayerConfig
         {

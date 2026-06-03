@@ -71,6 +71,11 @@ namespace Game.Runtime.Gameplay
             background.SetActive(false);
         }
 
+        public void WaitPlayer()
+        {
+            SetActive(false);
+        }
+
         private async void OnSearchClicked()
         {
             if (string.IsNullOrEmpty(searchInput.text))
@@ -145,9 +150,31 @@ namespace Game.Runtime.Gameplay
                 foreach (var item in _friendsProvider.Friends)
                 {
                     SimpleFriendItem instance = Instantiate(simpleFriendItem, container.transform);
-                    instance.Init(item.Value, searchInput.text, _iconStatManager);
+                    instance.Init(item.Value, item.Key, _iconStatManager);
+                    instance.OnClicked += async (userId) =>
+                    {
+                        try
+                        {
+                            canvasGroup.interactable = false;
+                            Guid battleId = Guid.NewGuid();
+                            await _database.GetReference($"battleRequests/{userId}/{FirebaseAuth.DefaultInstance.CurrentUser.UserId}/battleId").SetValueAsync(battleId.ToString());
+                            string json = JsonUtility.ToJson(new BeginBattleData() { white = FirebaseAuth.DefaultInstance.CurrentUser.UserId, black = userId, enemyPlayerResponse = string.Empty, battleOver = "no" });
 
-                    
+                            await _database.GetReference($"battle/{battleId}").SetRawJsonValueAsync(json);
+                            Debug.Log(userId);
+                            Debug.Log(FirebaseAuth.DefaultInstance.CurrentUser.UserId);
+
+                            BattleManager.Instance.WaitPlayer(userId, battleId.ToString());
+                        }
+                        catch (Exception e)
+                        {
+                            
+                            Debug.Log(e.Message);
+                            
+                        }
+                        finally { canvasGroup.interactable = true; }
+
+                    };
                 }
             }
             else
@@ -198,19 +225,19 @@ namespace Game.Runtime.Gameplay
                     };
                     instance.DiscardButtonClicked += async (userId) =>
                     {
+                        canvasGroup.interactable = false;
                         try
                         {
                             await _friendsProvider.DeclineFriendOffer(userId);
                             Debug.Log("Friend request declined");
                             Destroy(instance.gameObject);
-                            canvasGroup.interactable = true;
                         }
                         catch (Exception)
                         {
 
                             throw;
                         }
-                        finally { canvasGroup.interactable = false; }
+                        finally { canvasGroup.interactable = true; }
                     };
                 }
             }
@@ -224,4 +251,14 @@ namespace Game.Runtime.Gameplay
             searchInput.text = string.Empty;
         }
     }
+}
+
+[Serializable]
+public class BeginBattleData
+{
+    public string white;
+    public string black;
+    public string enemyPlayerResponse;
+    public string battleOver;
+
 }

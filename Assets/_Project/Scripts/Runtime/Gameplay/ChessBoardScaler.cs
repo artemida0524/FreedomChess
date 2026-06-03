@@ -36,5 +36,5 @@ namespace Game.Runtime.Gameplay.Board
                 grid.cellSize = new Vector2(size, size);
             }
         }
-    } 
+    }
 }

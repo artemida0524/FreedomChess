@@ -35,7 +35,7 @@ namespace Game.Runtime.AppStart
 
         private async void Start()
         {
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 144;
             PlayerPrefs.DeleteAll();
             _iconStatManager.Init();
             _backgroundView.Show();

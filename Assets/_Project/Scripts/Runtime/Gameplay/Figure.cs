@@ -84,7 +84,7 @@ public class Figure : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHa
         if (eventData.dragging) return;
 
         // Запам'ятовуємо, що вибрали саме цю фігуру
-        ChessTurnManager.Instance.SelectedFigure = this;
+        //BattleManager.Instance.SelectedFigure = this;
 
         // TODO: Тут можна додати візуальний ефект виділення (наприклад, підсвітити фігуру через DOTween)
         rectTransform.DOPunchScale(new Vector3(0.1f, 0.1f, 0f), 0.2f);

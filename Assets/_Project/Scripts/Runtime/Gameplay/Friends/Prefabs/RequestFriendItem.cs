@@ -1,3 +1,4 @@
+using Game.Core.Sounds;
 using Game.Runtime.Core.Player;
 using System;
 using TMPro;
@@ -27,6 +28,8 @@ namespace Game.Runtime.Gameplay
             eloText.text = $"{friendData.elo}";
             acceptButton.onClick.AddListener(() => AcceptButtonClicked?.Invoke(UserId));
             discardButton.onClick.AddListener(() => DiscardButtonClicked?.Invoke(UserId));
+            acceptButton.onClick.AddListener(() => SoundManager.Instance.Click());
+            discardButton.onClick.AddListener(() => SoundManager.Instance.Click());
         }
     }
 }
