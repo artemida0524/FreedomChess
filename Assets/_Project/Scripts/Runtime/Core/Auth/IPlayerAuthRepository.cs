@@ -11,7 +11,7 @@ namespace Game.Runtime.Core.Auth
         bool IsLoggedIn { get; }
         string Email { get; }
 
-        event Action OnLoggedOut;
+        event Action<string> OnLoggedOut;
 
         UniTask Init();
 
