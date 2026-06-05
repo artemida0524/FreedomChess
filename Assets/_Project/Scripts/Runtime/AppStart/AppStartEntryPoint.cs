@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Firebase;
+using Firebase.AppCheck;
 using Game.Runtime.AppStart.StartupFlow;
 using Game.Runtime.AppStart.Views;
 using Game.Runtime.Background;
@@ -36,11 +38,24 @@ namespace Game.Runtime.AppStart
         private async void Start()
         {
             Application.targetFrameRate = 144;
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
             _iconStatManager.Init();
             _backgroundView.Show();
 
             _signInPanelView.Init();
+
+            Firebase.DependencyStatus status = await FirebaseApp.CheckAndFixDependenciesAsync();
+
+            if (status != Firebase.DependencyStatus.Available)
+            {
+                UnityEngine.Debug.LogError($"Could not resolve all Firebase dependencies: {status}");
+                return;
+            }
+
+            DebugAppCheckProviderFactory.Instance.SetDebugToken("D96C0EDF-22D1-42B3-BDDC-404FBC522AD3");
+            FirebaseAppCheck.SetAppCheckProviderFactory(DebugAppCheckProviderFactory.Instance);
+            FirebaseAppCheck.DefaultInstance.SetTokenAutoRefreshEnabled(true);
+
             presenter.Init();
 
             await _auth.Init();

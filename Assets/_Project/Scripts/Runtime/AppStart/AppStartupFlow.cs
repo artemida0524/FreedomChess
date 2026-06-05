@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Firebase;
+using Firebase.AppCheck;
 using Firebase.Database;
 using Firebase.Firestore;
 using Game.Runtime.AppStart.Tasks;
@@ -96,11 +97,14 @@ namespace Game.Runtime.AppStart.StartupFlow
             //    InitDependenciesResult.Successed);
             //OnProgressChanged?.Invoke(1f); 
 
+
             OnTaskStarted?.Invoke(new PreloadTask());
             _ = FirebaseApp.DefaultInstance;
 
             _ = Firebase.Auth.FirebaseAuth.DefaultInstance; 
             _ = FirebaseFirestore.DefaultInstance;
+
+
 
             Firebase.DependencyStatus status = await FirebaseApp.CheckAndFixDependenciesAsync();
 
@@ -111,6 +115,7 @@ namespace Game.Runtime.AppStart.StartupFlow
             }
             FirebaseDatabase.DefaultInstance.SetPersistenceEnabled(false);
             FirebaseFirestore.DefaultInstance.Settings.PersistenceEnabled = false;
+            OnProgressChanged?.Invoke(0.2f);
 
             GoogleSignInWithFirebase.Init();
 
@@ -121,7 +126,7 @@ namespace Game.Runtime.AppStart.StartupFlow
             {
                 await RunStartupSequenceAsync();
             }
-            OnProgressChanged?.Invoke(0.2f);
+            OnProgressChanged?.Invoke(0.5f);
 
 
             _loginTask = new LoginTask(signInPanelView);
@@ -129,10 +134,11 @@ namespace Game.Runtime.AppStart.StartupFlow
             await RepeatUntilSuccess(
                  () => TaskAsync(_loginTask),
                 AuthError.None);
-            OnProgressChanged?.Invoke(0.6f);
+            OnProgressChanged?.Invoke(0.7f);
 
             _friendsProvider.Dispose();
             await _playerProvider.Init();
+            OnProgressChanged?.Invoke(0.9f);
             await _friendsProvider.Init();
 
             //await _friendsProvider.AcceptFriendOffer("bwE1xS7XpxNSqh5bOycu6lrg9UH2");
